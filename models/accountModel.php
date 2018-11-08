@@ -1,0 +1,127 @@
+<?php  
+/**
+ * accountsModel.php
+ *
+ * @author Arturo Adonay Rayas Vergara <arturorayas60@gmail.com>
+ */
+
+	/** *//**
+	 * Clase accountModel
+	 */
+	class accountModel extends AppModel
+	{
+		/** *//**
+		 * funcion constructora
+		 * @return type
+		 */
+		public function __construct()
+		{
+			parent::__construct();
+		}
+
+		/** *//**
+		 * funcion GetAll carga todas las cuentas
+		 * @return type
+		 */
+		public function GetAll()
+		{
+			$query = $this->_db->prepare("SELECT * FROM accounts");
+			$query->execute();
+			$items = $query->fetchall();
+			if($items)
+			{
+				return $items;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		/** *//**
+		 * funcion add agrega una cuenta a la base de datos
+		 * @param array $data 
+		 * @return type
+		 */
+		public function Add($data = array())
+		{
+			$query = $this->_db->prepare("INSERT INTO accounts (user_id,name) VALUES (:user_id,:name)");
+
+			$defaultID = "1";
+			$query->bindParam(":user_id",$defaultID);
+			$query->bindParam(":name",$data['name']);
+
+			if($query->execute())
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		/** *//**
+		 * funcion Update actualiza los datos de  una cuenta a la base de datos segun el id que envies al metodo
+		 * @param $data 
+		 * @return type
+		 */
+		public function Update($data = array()) 
+		{
+			$query = $this->_db->prepare("UPDATE accounts SET name=:name WHERE id=:id");
+			$query->bindParam(":id",$data['id']);
+			$query->bindParam(":name",$data['name']);
+
+			if($query->execute())
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		/** *//**
+		 * funcion find trae los datos de  la cuenta a la que le pertenezca el id que se envia
+		 * @param $id 
+		 * @return type
+		 */
+		public function Find($id)
+		{
+			$query = $this->_db->prepare("SELECT * FROM accounts WHERE id=:id");
+			$query->bindParam(":id",$id);
+			$query->execute();
+			$items = $query->fetch();
+			if($items)
+			{
+				return $items;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		/** *//**
+		 * funcion delete elimina en la base de datos la cuenta a la que le corresponda el id que se envia en metodo
+		 * @param $id 
+		 * @return type
+		 */
+		public function Delete($id)
+		{
+			$query = $this->_db->prepare("DELETE FROM accounts WHERE id=:id");
+			$query->bindParam(":id",$id);
+			$query->execute();
+			$items = $query->fetch();
+			if($items)
+			{
+				return $items;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+?>
