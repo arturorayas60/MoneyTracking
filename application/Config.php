@@ -8,7 +8,7 @@
  /**
   *se definen todos los parametros de configuracion del proyecto
   */
-define("DEFAULT_CONTROLLER", "accounts");  
+define("DEFAULT_CONTROLLER", "transactions");  
 define("DEFAULT_LAYOUT", "default");
 
 define("APP_FOLDER", "it101/MoneyTracking");
